@@ -88,6 +88,7 @@ showDepartments = () => {
         inquirePrompt();
     })
 };
+// -------------------------------------------
 
 // Show Roles
 showRoles = () => {
@@ -99,6 +100,7 @@ showRoles = () => {
         inquirePrompt();
     })
 };
+// -------------------------------------------
 
 // Add Roles
 addRoles = () => {
@@ -146,4 +148,135 @@ addRoles = () => {
         });
     });
 };
+// -------------------------------------------
 
+
+// show employees
+showEmployees = () => {
+    console.log('All employees are now showing');
+    const mysql = `SELECT employee.id, employee.first_name, employee.last_name. roles.title, department.name AS department roles.salary, CONCAT(mgr.first_name, mgr.last_name)`;
+
+    connection.query(mysql, (err, rows) => {
+        if(err) return console.log(err);
+        console.table(rows);
+        inquirePrompt();
+    });
+};
+// -------------------------------------------
+
+// Update Employees
+updateEmployee = () => {
+    const employeemysql = `SELECT * FROM employee`;
+    connection.query(employeemysql, (err, data) => {
+        const employee = data.map(({id, first_name, last_name}) => ({name: first_name + " " + last_name, value: id }));
+
+        // Inquire Prompt
+        inquire.prompt([
+            {
+                type: 'list',
+                name: 'name',
+                message: 'Which employee would you like to update?',
+                choices: employees
+            }
+        ])
+
+        .then(employeeChoice => {
+            const employee = employeeChoice.name;
+            const parameters = [];
+            parameters.push(employee);
+
+            const roles_var = `SELECT * FROM role`;
+
+            connection.query(roles_var, (err, data) => {
+                if(err) return console.log(err);
+                const roles = data.map(({id, title}) => ({name:title, value:id}));
+
+                inquire.prompt([
+                    {
+                        type: 'list',
+                        name: 'role',
+                        message: 'What is the new role?',
+                        choices: roles
+                    }
+                ])
+                .then(roleChoice => {
+                    const role = roleChoice.role;
+                    parameters.push(role);
+                    let employee = parameters[0];
+                    parameters[0] = role;
+                    parameters[1] = employee;
+                    const mysql = `UPDATE employee SET role_id = ? WHERE id = ?`;
+
+                    connection.query(mysql, parameters, (err, result) => {
+                        if (err) return console.log(err);
+                        console.log('Employee role has been updated!');
+
+                        showEmployees();
+                    })
+                })
+            })
+        });
+    });
+};
+// -------------------------------------------
+
+// Update or Add a department
+addDepartment = () => {
+    inquire.prompt ([
+        {
+            type: 'input',
+            name: 'department',
+            message: 'What is the name of the department you would like to add?'
+        }
+    ])
+    
+    .then(answer => {
+        const mysql = `INSERT INTO department (name) VALUES (?)`;
+        connection.query(mysql, answer.department, (err, results) => {
+            if(err) return console.log(err);
+            console.log('Added' + answer.department + "to departments");
+
+            showDepartments();
+        })
+    })
+};
+// -------------------------------------------
+
+// Add an employee
+addEmployees = () => {
+    inquire.prompt([
+        {
+            type: 'input',
+            name: 'first_name',
+            message: 'What is the first name?'
+        },
+        {
+            type: 'input',
+            name: 'last_name',
+            message: 'What is the last name?'
+        }
+    ])
+    .then(answer => {
+        const parameters = [answer.first_name, answer.last_name];
+        const roles_var = `SELECT roles.id, roles.title FROM roles`;
+        connection.query(roles_var, (err, data) => {
+            if(err) return console.log(err);
+            const roles = data.map(({id, title}) => ({name:title, value:id}));
+
+            inquire.prompt([
+                {
+                    type: 'list',
+                    name: 'role',
+                    message: 'What is the employee role?',
+                    choices: roles
+                }
+            ])
+            .then(roleChoice => {
+                const role = roleChoice.role;
+                parameters.push(role);
+
+                showEmployees();
+            });
+        });
+    });
+};
