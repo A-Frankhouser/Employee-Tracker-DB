@@ -93,7 +93,10 @@ showDepartments = () => {
 // Show Roles
 showRoles = () => {
     console.log('Displaying all roles');
-    const mysql = `Select roles.id, roles.title, department.name AS Department FROM roles LEFT JOIN department ON roles.department_id = department.id`;
+    const mysql = `Select roles.id, 
+                    roles.title, 
+                    department.name AS Department 
+                    FROM roles INNER JOIN department ON roles.department_id = department.id`;
 
     connection.query(mysql,(err,rows) => {
         console.table(rows);
@@ -154,7 +157,17 @@ addRoles = () => {
 // show employees
 showEmployees = () => {
     console.log('All employees are now showing');
-    const mysql = `SELECT employee.id, employee.first_name, employee.last_name. roles.title, department.name AS department roles.salary, CONCAT(mgr.first_name, mgr.last_name) AS manager FROM employee LEFT JOIN roles ON employee.role_id = roles.id LEFT JOIN department ON roles.department_id = department.id LEFT JOIN employee mgr ON employee.manager_id = mgr.id`;
+    const mysql = `SELECT employee.id, 
+                    employee.first_name, 
+                    employee.last_name, roles.title, 
+                    department.name AS department,
+                    roles.salary, 
+                    CONCAT(mgr.first_name, " ", mgr.last_name) 
+                    AS manager 
+                    FROM employee 
+                    LEFT JOIN roles ON employee.role_id = roles.id 
+                    LEFT JOIN department ON roles.department_id = department.id 
+                    LEFT JOIN employee mgr ON employee.manager_id = mgr.id`;
 
     connection.query(mysql, (err, rows) => {
         if(err) return console.log(err);
