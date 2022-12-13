@@ -16,11 +16,11 @@ const connection = mysql.createConnection(
 
 connection.connect(function (err) {
     if (err) return console.log(err);
-    inquirePrompt();
+    InquirerPrompt();
 });
 
-// Inquire Prompt------------------------------------
-const inquirePrompt = () => {
+// Inquirer Prompt------------------------------------
+const InquirerPrompt = () => {
     inquirer.prompt([
         {
             type: 'list',
@@ -85,7 +85,7 @@ showDepartments = () => {
     connection.query(mysql, (err, rows) => {
         if(err) return console.log(err);
         console.table(rows);
-        inquirePrompt();
+        InquirerPrompt();
     })
 };
 // -------------------------------------------
@@ -97,7 +97,7 @@ showRoles = () => {
 
     connection.query(mysql,(err,rows) => {
         console.table(rows);
-        inquirePrompt();
+        InquirerPrompt();
     })
 };
 // -------------------------------------------
@@ -154,12 +154,12 @@ addRoles = () => {
 // show employees
 showEmployees = () => {
     console.log('All employees are now showing');
-    const mysql = `SELECT employee.id, employee.first_name, employee.last_name. roles.title, department.name AS department roles.salary, CONCAT(mgr.first_name, mgr.last_name)`;
+    const mysql = `SELECT employee.id, employee.first_name, employee.last_name. roles.title, department.name AS department roles.salary, CONCAT(mgr.first_name, mgr.last_name) AS manager FROM employee LEFT JOIN roles ON employee.role_id = roles.id LEFT JOIN department ON roles.department_id = department.id LEFT JOIN employee mgr ON employee.manager_id = mgr.id`;
 
     connection.query(mysql, (err, rows) => {
         if(err) return console.log(err);
         console.table(rows);
-        inquirePrompt();
+        InquirerPrompt();
     });
 };
 // -------------------------------------------
@@ -170,7 +170,7 @@ updateEmployee = () => {
     connection.query(employeemysql, (err, data) => {
         const employee = data.map(({id, first_name, last_name}) => ({name: first_name + " " + last_name, value: id }));
 
-        // Inquire Prompt
+        // Inquirer Prompt
         inquirer.prompt([
             {
                 type: 'list',

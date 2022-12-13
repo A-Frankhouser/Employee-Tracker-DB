@@ -21,7 +21,7 @@ VALUES
 -- // -------------------------------------------
 
 -- Employees
-INSERT INTO employee(first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
     ('Bilbo', 'Baggins', 2,2),
     ('Thorin', 'Oakenshieldins', 1,1),
