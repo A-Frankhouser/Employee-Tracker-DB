@@ -1,5 +1,5 @@
 const express = require('express');
-const inquire = require('inquirer');
+const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const cTable = require('console.table');
 
@@ -21,7 +21,7 @@ connection.connect(function (err) {
 
 // Inquire Prompt------------------------------------
 const inquirePrompt = () => {
-    inquire.prompt([
+    inquirer.prompt([
         {
             type: 'list',
             name: 'choices',
@@ -104,7 +104,7 @@ showRoles = () => {
 
 // Add Roles
 addRoles = () => {
-    inquire.prompt([
+    inquirer.prompt([
         {
             type: 'input',
             name: 'roles',
@@ -125,7 +125,7 @@ addRoles = () => {
             if (err) return console.log(err);
             const department_var = data.map (({ name, id }) => ({name: name, value: id}));
 
-            inquire.prompt([
+            inquirer.prompt([
                 {
                     type: 'list',
                     name: 'department_var',
@@ -171,7 +171,7 @@ updateEmployee = () => {
         const employee = data.map(({id, first_name, last_name}) => ({name: first_name + " " + last_name, value: id }));
 
         // Inquire Prompt
-        inquire.prompt([
+        inquirer.prompt([
             {
                 type: 'list',
                 name: 'name',
@@ -191,7 +191,7 @@ updateEmployee = () => {
                 if(err) return console.log(err);
                 const roles = data.map(({id, title}) => ({name:title, value:id}));
 
-                inquire.prompt([
+                inquirer.prompt([
                     {
                         type: 'list',
                         name: 'role',
@@ -222,7 +222,7 @@ updateEmployee = () => {
 
 // Update or Add a department
 addDepartment = () => {
-    inquire.prompt ([
+    inquirer.prompt ([
         {
             type: 'input',
             name: 'department',
@@ -244,7 +244,7 @@ addDepartment = () => {
 
 // Add an employee
 addEmployees = () => {
-    inquire.prompt([
+    inquirer.prompt([
         {
             type: 'input',
             name: 'first_name',
@@ -263,7 +263,7 @@ addEmployees = () => {
             if(err) return console.log(err);
             const roles = data.map(({id, title}) => ({name:title, value:id}));
 
-            inquire.prompt([
+            inquirer.prompt([
                 {
                     type: 'list',
                     name: 'role',
