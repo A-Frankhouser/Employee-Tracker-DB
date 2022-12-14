@@ -8,6 +8,7 @@ The purpose of this project was too  develope a command-line program that could 
 * 4.) Add a department. <br>
 * 5.) Add a role. <br>
 * 6.) Add an employee. 
+* 7.) Update an employee's information.
 
 ## How to use:
 To be able to use this program first you have to clone this repository to your local machine. Once cloned, open up the <b>"Package.jason"</b> file in the integrated terminal and run <b>"npm i"</b>. This will install all the dependencies.<br>
@@ -28,7 +29,7 @@ Once this is completed then you are ready to open up an new terminal and type in
 * Adding an employee.
 ![Adding employee](assets/Screenshot%20(3).png)
 
-* Updating and employee.
+* Updating an employee.
 ![Updating employee](assets/Screenshot%20(4).png)
 
 * Adding a role and department.
