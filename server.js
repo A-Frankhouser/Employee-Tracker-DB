@@ -93,10 +93,10 @@ showDepartments = () => {
 // Show Roles
 showRoles = () => {
     console.log('Displaying all roles');
-    const mysql = `Select roles.id, 
-                    roles.title, 
+    const mysql = `Select role.id, 
+                    role.title, 
                     department.name AS Department 
-                    FROM roles INNER JOIN department ON roles.department_id = department.id`;
+                    FROM role INNER JOIN department ON role.department_id = department.id`;
 
     connection.query(mysql,(err,rows) => {
         console.table(rows);
@@ -140,7 +140,7 @@ addRoles = () => {
             .then(department_varChoice => {
                 const department_var = department_varChoice.department_var;
                 parameters.push(department_var);
-                const mysql = `INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)`;
+                const mysql = `INSERT INTO role (title, salary, department_id) VALUES (?,?,?)`;
 
                 connection.query(mysql, parameters, (err, result) => {
                     if(err) return console.log(err);
@@ -159,14 +159,14 @@ showEmployees = () => {
     console.log('All employees are now showing');
     const mysql = `SELECT employee.id, 
                     employee.first_name, 
-                    employee.last_name, roles.title, 
+                    employee.last_name, role.title, 
                     department.name AS department,
-                    roles.salary, 
+                    role.salary, 
                     CONCAT(mgr.first_name, " ", mgr.last_name) 
                     AS manager 
                     FROM employee 
-                    LEFT JOIN roles ON employee.role_id = roles.id 
-                    LEFT JOIN department ON roles.department_id = department.id 
+                    LEFT JOIN role ON employee.role_id = role.id 
+                    LEFT JOIN department ON role.department_id = department.id 
                     LEFT JOIN employee mgr ON employee.manager_id = mgr.id`;
 
     connection.query(mysql, (err, rows) => {
@@ -178,10 +178,10 @@ showEmployees = () => {
 // -------------------------------------------
 
 // Update Employees
-updateEmployee = () => {
+employeeInformation = () => {
     const employeemysql = `SELECT * FROM employee`;
     connection.query(employeemysql, (err, data) => {
-        const employee = data.map(({id, first_name, last_name}) => ({name: first_name + " " + last_name, value: id }));
+        const employees = data.map(({id, first_name, last_name}) => ({name: first_name + " " + last_name, value: id }));
 
         // Inquirer Prompt
         inquirer.prompt([
@@ -271,10 +271,10 @@ addEmployees = () => {
     ])
     .then(answer => {
         const parameters = [answer.first_name, answer.last_name];
-        const roles_var = `SELECT roles.id, roles.title FROM roles`;
+        const roles_var = `SELECT role.id, role.title FROM role`;
         connection.query(roles_var, (err, data) => {
             if(err) return console.log(err);
-            const roles = data.map(({id, title}) => ({name:title, value:id}));
+            const roles = data.map(({id, title}) => ({name: title, value: id}));
 
             inquirer.prompt([
                 {
@@ -288,6 +288,13 @@ addEmployees = () => {
                 const role = roleChoice.role;
                 parameters.push(role);
 
+            const sql = `INSERT INTO employee (first_name, last_name, role_id)
+                        Values (?,?,?)`;
+            
+            connection.query(sql, parameters, (err, result) => {
+                if (err) throw err;
+                console.log('Employee has been added!');
+            })
                 showEmployees();
             });
         });

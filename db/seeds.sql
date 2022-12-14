@@ -9,7 +9,7 @@ VALUES
 -- // -------------------------------------------
 
 -- Employee Roles
-INSERT INTO roles (title, salary, department_id)
+INSERT INTO role (title, salary, department_id)
 VALUES 
     ('Data Engineer', 90000, 5),
     ('Data Analylist', 90000, 5),
