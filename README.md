@@ -16,7 +16,8 @@ After that you will have to open mysql in the terminal and type <b>"mysql -u roo
 Once this is completed then you are ready to open up an new terminal and type in <b>"npm start"</b>. This will give you a list of prompts.
 
 ## Video Demonstration Link:
-
+-Note: If it says video is still processing then you may have to download it.
+* https://drive.google.com/file/d/1nj9JNISJQPuZoWp0IPOJMUUdG_r2ic-7/view
 ## Screenshot:
 
 ## Contact Information:
