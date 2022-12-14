@@ -1,7 +1,7 @@
 # Employee Tracker CMS
 
 ## Project Description:
-The purpose of this project was too  develope a command-line program that could manage a company's employee database. It contains the following options: <br>
+The purpose of this project was to develope a command-line program that could manage a company's employee database. It contains the following options: <br>
 * 1.) View all departments. <br>
 * 2.) View all roles. <br>
 * 3.) View all employees. <br>
