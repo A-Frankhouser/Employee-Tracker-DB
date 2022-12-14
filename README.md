@@ -11,8 +11,8 @@ The purpose of this project was to develope a command-line program that could ma
 * 7.) Update an employee's information.
 
 ## How to use:
-To be able to use this program first you have to clone this repository to your local machine. Once cloned, open up the <b>"Package.jason"</b> file in the integrated terminal and run <b>"npm i"</b>. This will install all the dependencies.<br>
-Next go into <b>"server.js"</b> and on line 11 that your correct password for mysql is inserted.<br>
+To be able to use this program first you have to clone this repository to your local machine. Once cloned, open up the <b>"package.jason"</b> file in the integrated terminal and run <b>"npm i"</b>. This will install all the dependencies.<br>
+Next go into <b>"server.js"</b> and on line 11, make sure that your correct password for mysql is inserted.<br>
 After that you will have to open mysql in the terminal and type <b>"mysql -u root -p"</b>. Following that type in your correct password. Then proceed to type <b>"source db/schema.sql"</b> and <b>"source db/seeds.sql"</b>.<br>
 Once this is completed then you are ready to open up an new terminal and type in <b>"npm start"</b>. This will give you a list of prompts.
 
